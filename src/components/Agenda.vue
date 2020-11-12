@@ -4,19 +4,25 @@
     <table class="table table-striped">
       <tr>
         <th></th>
+        <th>id</th>
         <th>Nome</th>
         <th>Telefone</th>
         <th>Operadora</th>
       </tr>
+
       <tr>
+
         <td>
           <input type="checkbox" />
         </td>
-        <td>Paulo</td>
-        <td>937868133</td>
-        <td>Unitel</td>
+        <td v-for="(value, index) in contactos" :key="index">
+            
+            {{ value }}
 
+        </td>
+      
       </tr>
+
     </table>
 
     <hr />
@@ -47,7 +53,23 @@
 </template>
 
 <script>
-export default {};
+export default {
+     /*  data(){
+    return {
+    contactoAgenda :{
+        id :1,
+        nome : "Paulo Lopes Estevão",
+        numero: 937868133,
+        operadora :"unitel"
+
+      }
+    }
+  }, */
+  props:{
+      contactos : Object
+  }
+
+};
 </script>
 
 <style scoped>
@@ -70,76 +92,86 @@ export default {};
   background-color: #eee;
 }
 .table {
-		margin-top: 20px;
-	}
-
-	.form-control {
-		margin-bottom: 5px;
-	}
-.table {
-    border-spacing: 0;
-    border-collapse: collapse;
-}
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 20px;
-}
-.table {
-    background-color: transparent;
+  margin-top: 20px;
 }
 
 .form-control {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
+}
+.table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+.table {
+  background-color: transparent;
+}
+
+.form-control {
+  margin-bottom: 5px;
 }
 .form-control:focus {
   border-color: #66afe9;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
-          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
 }
 .form-control {
-    display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s,
+    -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-input, button, select, textarea {
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 input {
-    line-height: normal;
+  line-height: normal;
 }
-button, input, optgroup, select, textarea {
-    margin: 0;
-    font: inherit;
-    color: inherit;
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font: inherit;
+  color: inherit;
 }
 
 .alert-danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
 }
 .alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
 }
 
 .btn {
@@ -153,12 +185,12 @@ button, input, optgroup, select, textarea {
   white-space: nowrap;
   vertical-align: middle;
   -ms-touch-action: manipulation;
-      touch-action: manipulation;
+  touch-action: manipulation;
   cursor: pointer;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -175,15 +207,15 @@ button, input, optgroup, select, textarea {
 }
 
 .btn-danger {
-    color: #fff;
-    background-color: #d9534f;
-    border-color: #d43f3a;
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
 }
 
 .btn-primary .badge {
@@ -191,17 +223,21 @@ button, input, optgroup, select, textarea {
   background-color: #fff;
 }
 
-button, html input[type="button"], input[type="reset"], input[type="submit"] {
-    -webkit-appearance: button;
-    cursor: pointer;
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
 }
 
-button, select {
-    text-transform: none;
+button,
+select {
+  text-transform: none;
 }
 
 button {
-    overflow: visible;
+  overflow: visible;
 }
 
 .btn-primary:hover,
@@ -220,7 +256,6 @@ button {
 .open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
-
 
 .btn-primary.disabled,
 .btn-primary[disabled],
@@ -258,8 +293,8 @@ input[type="button"].btn-block {
 }
 
 * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 </style>

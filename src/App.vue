@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <Agenda />
+    <Agenda :contactos="contactoAgenda" />
   </div>
 </template>
 
@@ -10,6 +10,17 @@ import Agenda from "./components/Agenda.vue";
 
 export default {
   name: "App",
+  data(){
+    return {
+      contactoAgenda :{
+        id:1,
+        nome : "Paulo Lopes Estevão",
+        numero: 937868133,
+        operadora : "unitel"
+
+      }
+    }
+  },
   components: {
     Agenda,
   },

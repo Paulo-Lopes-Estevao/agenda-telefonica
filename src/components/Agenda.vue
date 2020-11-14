@@ -1,6 +1,7 @@
 <template>
   <div class="jumbotron">
     <h4>{{ msg }}</h4>
+    <input type="search" class="form-control" v-model="busca" name="" id="" />
     <table class="table table-striped">
       <tr>
         <th></th>
@@ -10,7 +11,7 @@
         <th>Operadora</th>
       </tr>
 
-      <tr v-for="(value, index) in contactos" :key="index">
+      <tr v-for="(value, index) in viewContacto" :key="index">
         <td>
           <input
             type="checkbox"
@@ -86,13 +87,15 @@ export default {
     return {
       id: "",
       nome: "",
+      busca:"",
       numero: "",
       keyindex: "",
       idremove: "",
       operadora: "",
-      controleNome: false,
       deldisabled: "disabled",
       adddisabled: "disabled",
+      controleNome: false,
+      searchcontacto: [],
       controleTelefone: false,
 
       contactos: [
@@ -119,18 +122,18 @@ export default {
         this.controleTelefone = false;
         this.controleNome = false;
         this.contactos.push({
-        id: plusid,
-        nome: this.nome,
-        numero: this.numero,
-        operadora: this.operadora,
-      });
+          id: plusid,
+          nome: this.nome,
+          numero: this.numero,
+          operadora: this.operadora,
+        });
       }
-      this.nome=""
-      this.numero=""
-      this.operadora=""
+      this.nome = "";
+      this.numero = "";
+      this.operadora = "";
     },
     delContactos: function () {
-      this.contactos.splice(this.keyindex,this.idremove);
+      this.contactos.splice(this.keyindex, this.idremove);
     },
     showEventId: function (index, idrm, $event) {
       let ckeck = $event.target.checked;
@@ -143,8 +146,19 @@ export default {
     },
     conditionadd: function () {
       if (!this.nome == "" && !this.numero == " ") {
-            this.adddisabled = false;
+        this.adddisabled = false;
       }
+    },
+  },
+
+  computed: {
+    viewContacto : function() {
+
+      if (this.busca =="" || this.busca ==" ") {
+        return this.contactos
+      }
+      return this.contactos.filter(data => data.nome.toLowerCase().includes(this.busca.toLowerCase().trim()));
+      
     },
   },
 

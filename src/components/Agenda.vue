@@ -1,6 +1,6 @@
 <template>
   <div class="jumbotron">
-    <h4>Titulo</h4>
+    <h4>{{ msg }}</h4>
     <table class="table table-striped">
       <tr>
         <th></th>
@@ -10,65 +10,122 @@
         <th>Operadora</th>
       </tr>
 
-      <tr>
-
+      <tr v-for="(value, index) in contactos" :key="index">
         <td>
           <input type="checkbox" />
         </td>
-        <td v-for="(value, index) in contactos" :key="index">
-            
-            {{ value }}
-
+        <td>{{ index + 1 }}</td>
+        <td>
+          {{ value.nome }}
         </td>
-      
+        <td>
+          {{ value.numero }}
+        </td>
+        <td>
+          {{ value.operadora }}
+        </td>
       </tr>
-
     </table>
 
     <hr />
 
-    <form name="contatoForm">
-      <input class="form-control" type="text" name="nome" placeholder="Nome" />
-
+    <form>
       <input
         class="form-control"
         type="text"
+        v-model="nome"
+        name="nome"
+        placeholder="Nome"
+      />
+
+      <input
+        class="form-control"
+        type="number"
         name="telefone"
+        v-model="numero"
         placeholder="Telefone"
       />
 
-      <select class="form-control">
+      <select class="form-control" v-model="operadora">
         <option value="">Selecione uma operadora</option>
-        <option value="unitel">Unitel</option>
-        <option value="movicel">Movicel</option>
+        <option value="Unitel">Unitel</option>
+        <option value="Movicel">Movicel</option>
       </select>
     </form>
 
-    <div class="alert alert-danger">Por favor, preencha o nome</div>
-    <div class="alert alert-danger">Por favor, preencha o telefone</div>
+    <div v-show="controleNome" class="alert alert-danger">
+      Por favor, preencha o nome
+    </div>
+    <div v-show="controleTelefone" class="alert alert-danger">
+      Por favor, preencha o telefone
+    </div>
 
-    <button class="btn btn-primary btn-block">Adicionar Contato</button>
-    <button class="btn btn-danger btn-block">Apagar Contatos</button>
+    <button
+      :disabled="disabled"
+      class="btn btn-primary btn-block"
+      v-on:click="addContactos()"
+    >
+      Adicionar Contato
+    </button>
+    <button class="btn btn-danger btn-block" @click="delContactos(index)">
+      Apagar Contatos
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-     /*  data(){
-    return {
-    contactoAgenda :{
-        id :1,
-        nome : "Paulo Lopes Estevão",
-        numero: 937868133,
-        operadora :"unitel"
+  data() {
+    return { 
+      nome: "",
+      numero: "",
+      operadora: "",
+      disabled: "disabled",
+      controleNome: false,
+      controleTelefone: false,
 
+      contactos: [
+        {
+          nome: "Paulo Lopes Estevão",
+          numero: 937868133,
+          operadora: "Unitel",
+        },
+      ],
+    };
+  },
+  methods: {
+    addContactos: function () {
+      this.operadora == "" ? (this.operadora = "Unitel") : this.operadora;
+      this.contactos.push({
+        nome: this.nome,
+        numero: this.numero,
+        operadora: this.operadora,
+      });
+    },
+    delContactos: function (index) {
+      console.log(index)
+    },
+    conditionadd: function () {
+      if (this.nome == "" || this.nome == " ") {
+        this.controleNome = true;
+        this.disabled = "disabled";
+      } else if (this.numero == "" || this.numero == " ") {
+        this.controleTelefone = true;
+        this.disabled = "disabled";
+      } else {
+        this.disabled = false;
+        this.controleTelefone = false;
+        this.controleNome = false;
       }
-    }
-  }, */
-  props:{
-      contactos : Object
-  }
+    },
+  },
 
+  updated() {
+    this.conditionadd();
+  },
+  props: {
+    msg: String,
+  },
 };
 </script>
 

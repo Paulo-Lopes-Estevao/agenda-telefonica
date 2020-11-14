@@ -12,9 +12,12 @@
 
       <tr v-for="(value, index) in contactos" :key="index">
         <td>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            v-on:click="showEventId(index, value.id, $event)"
+          />
         </td>
-        <td>{{ index + 1 }}</td>
+        <td>{{ value.id }}</td>
         <td>
           {{ value.nome }}
         </td>
@@ -61,13 +64,17 @@
     </div>
 
     <button
-      :disabled="disabled"
+      :disabled="adddisabled"
       class="btn btn-primary btn-block"
       v-on:click="addContactos()"
     >
       Adicionar Contato
     </button>
-    <button class="btn btn-danger btn-block" @click="delContactos(index)">
+    <button
+      :disabled="deldisabled"
+      class="btn btn-danger btn-block"
+      @click="delContactos()"
+    >
       Apagar Contatos
     </button>
   </div>
@@ -76,16 +83,21 @@
 <script>
 export default {
   data() {
-    return { 
+    return {
+      id: "",
       nome: "",
       numero: "",
+      keyindex: "",
+      idremove: "",
       operadora: "",
-      disabled: "disabled",
       controleNome: false,
+      deldisabled: "disabled",
+      adddisabled: "disabled",
       controleTelefone: false,
 
       contactos: [
         {
+          id: 1,
           nome: "Paulo Lopes Estevão",
           numero: 937868133,
           operadora: "Unitel",
@@ -95,27 +107,43 @@ export default {
   },
   methods: {
     addContactos: function () {
+      let plusid = this.contactos.length + 1;
       this.operadora == "" ? (this.operadora = "Unitel") : this.operadora;
-      this.contactos.push({
+      if (this.nome == "" || this.nome == " ") {
+        this.controleNome = true;
+        this.adddisabled = "disabled";
+      } else if (this.numero == "" || this.numero == " ") {
+        this.controleTelefone = true;
+        this.adddisabled = "disabled";
+      } else {
+        this.controleTelefone = false;
+        this.controleNome = false;
+        this.contactos.push({
+        id: plusid,
         nome: this.nome,
         numero: this.numero,
         operadora: this.operadora,
       });
+      }
+      this.nome=""
+      this.numero=""
+      this.operadora=""
     },
-    delContactos: function (index) {
-      console.log(index)
+    delContactos: function () {
+      this.contactos.splice(this.keyindex,this.idremove);
+    },
+    showEventId: function (index, idrm, $event) {
+      let ckeck = $event.target.checked;
+
+      if (ckeck == true) {
+        this.deldisabled = false;
+        this.keyindex = index;
+        this.idremove = idrm;
+      }
     },
     conditionadd: function () {
-      if (this.nome == "" || this.nome == " ") {
-        this.controleNome = true;
-        this.disabled = "disabled";
-      } else if (this.numero == "" || this.numero == " ") {
-        this.controleTelefone = true;
-        this.disabled = "disabled";
-      } else {
-        this.disabled = false;
-        this.controleTelefone = false;
-        this.controleNome = false;
+      if (!this.nome == "" && !this.numero == " ") {
+            this.adddisabled = false;
       }
     },
   },
